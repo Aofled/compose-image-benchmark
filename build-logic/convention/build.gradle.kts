@@ -1,5 +1,6 @@
 plugins {
     `kotlin-dsl`
+    alias(libs.plugins.detekt)
 }
 
 group = "ru.createsmart.composeimagebenchmark.buildlogic"
@@ -15,6 +16,21 @@ dependencies {
     implementation(libs.kotlinComposeGradlePlugin)
     implementation(libs.kspGradlePlugin)
     implementation(libs.hiltGradlePlugin)
+    implementation(libs.detekt.gradlePlugin)
+    "detektPlugins"(libs.detekt.formatting)
+}
+
+val isAutoCorrectEnabled = providers.gradleProperty("detekt.autocorrect").getOrElse("false") == "true"
+
+detekt {
+    buildUponDefaultConfig = true
+    source.setFrom(files("src"))
+    config.setFrom(files("../../config/detekt/detekt.yml"))
+    autoCorrect = isAutoCorrectEnabled
+}
+
+tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+    autoCorrect = isAutoCorrectEnabled
 }
 
 gradlePlugin {
@@ -51,6 +67,11 @@ gradlePlugin {
         register("hiltConvention") {
             id = "composeimagebenchmark.hilt"
             implementationClass = "ru.createsmart.composeimagebenchmark.buildlogic.HiltConventionPlugin"
+        }
+
+        register("detektConvention") {
+            id = "composeimagebenchmark.detekt"
+            implementationClass = "ru.createsmart.composeimagebenchmark.buildlogic.DetektConventionPlugin"
         }
     }
 }

@@ -19,6 +19,7 @@ class JvmLibraryConventionPlugin : Plugin<Project> {
             with(pluginManager) {
                 apply("java-library")
                 apply("org.jetbrains.kotlin.jvm")
+                apply("composeimagebenchmark.detekt")
             }
 
             extensions.configure<JavaPluginExtension> {
