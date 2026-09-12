@@ -21,6 +21,7 @@ hilt = "2.60.1"
 # Code Quality & Processing
 ksp = "2.3.10"
 detekt = "1.23.8"
+composeRules = "0.4.23"
 
 # Testing
 junit = "4.13.2"
@@ -57,6 +58,7 @@ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = 
 
 # Tools & Formatters
 detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
+detekt-compose-rules = { group = "io.nlopez.compose.rules", name = "detekt", version.ref = "composeRules" }
 
 # Testing
 junit = { group = "junit", name = "junit", version.ref = "junit" }

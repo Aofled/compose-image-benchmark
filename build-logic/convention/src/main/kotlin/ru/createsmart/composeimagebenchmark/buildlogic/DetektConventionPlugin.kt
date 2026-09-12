@@ -47,6 +47,7 @@ class DetektConventionPlugin : Plugin<Project> {
 
             dependencies {
                 add("detektPlugins", libs.findLibrary("detekt-formatting").get())
+                add("detektPlugins", libs.findLibrary("detekt-compose-rules").get())
             }
         }
     }

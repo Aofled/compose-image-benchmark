@@ -1084,3 +1084,18 @@ formatting:
     autoCorrect: true
     indentSize: 4
     maxLineLength: 120
+
+# Rules for Jetpack Compose from io.nlopez.compose.rules
+Compose:
+  ModifierWithoutDefault:
+    active: true
+  ModifierReused:
+    active: true
+  RememberMissing:
+    active: true
+  MultipleEmitters:
+    active: true
+  ComposableNaming:
+    active: true
+  ComposableParamOrder:
+    active: true

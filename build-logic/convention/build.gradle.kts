@@ -18,6 +18,7 @@ dependencies {
     implementation(libs.hiltGradlePlugin)
     implementation(libs.detekt.gradlePlugin)
     "detektPlugins"(libs.detekt.formatting)
+    "detektPlugins"(libs.detekt.compose.rules)
 }
 
 val isAutoCorrectEnabled = providers.gradleProperty("detekt.autocorrect").getOrElse("false") == "true"
