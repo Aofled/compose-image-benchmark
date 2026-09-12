@@ -17,5 +17,10 @@ dependencies {
 
 gradlePlugin {
     plugins {
+        register("androidApplication") {
+            id = "composeimagebenchmark.android.application"
+            implementationClass =
+                "ru.createsmart.composeimagebenchmark.buildlogic.AndroidApplicationConventionPlugin"
+        }
     }
 }
