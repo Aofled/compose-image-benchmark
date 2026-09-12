@@ -1,33 +1,35 @@
 plugins {
-    alias(libs.plugins.android.application)
+    id("composeimagebenchmark.android.application.compose")
+    id("composeimagebenchmark.hilt")
 }
 
 android {
-    namespace = "ru.createsmart.composeimagebenchmark"
-    compileSdk {
-        version = release(37)
-    }
-
     defaultConfig {
         applicationId = "ru.createsmart.composeimagebenchmark"
-        minSdk = 26
-        targetSdk = 37
-        versionCode = 1
-        versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        versionCode = providers.gradleProperty("APP_VERSION_CODE").map { it.toInt() }.getOrElse(1)
+        versionName = providers.gradleProperty("APP_VERSION_NAME").getOrElse("1.0.0")
     }
+
+    testBuildType = "benchmark"
 
     buildTypes {
         release {
-            optimization {
-                enable = false
-            }
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro",
+            )
         }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+
+        create("benchmark") {
+            initWith(getByName("release"))
+            matchingFallbacks += listOf("release")
+            signingConfig = signingConfigs.getByName("debug")
+            isDebuggable = false
+            isProfileable = true
+        }
     }
 }
 
