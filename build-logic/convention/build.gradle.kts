@@ -40,5 +40,11 @@ gradlePlugin {
             implementationClass =
                 "ru.createsmart.composeimagebenchmark.buildlogic.AndroidLibraryComposeConventionPlugin"
         }
+
+        register("jvmLibrary") {
+            id = "composeimagebenchmark.jvm.library"
+            implementationClass = "ru.createsmart.composeimagebenchmark.buildlogic.JvmLibraryConventionPlugin"
+        }
+
     }
 }
