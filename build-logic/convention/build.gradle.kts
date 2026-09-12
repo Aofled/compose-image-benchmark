@@ -13,6 +13,8 @@ dependencies {
     implementation(libs.android.gradlePlugin)
     implementation(libs.kotlin.gradlePlugin)
     implementation(libs.kotlinComposeGradlePlugin)
+    implementation(libs.kspGradlePlugin)
+    implementation(libs.hiltGradlePlugin)
 }
 
 gradlePlugin {
@@ -46,5 +48,9 @@ gradlePlugin {
             implementationClass = "ru.createsmart.composeimagebenchmark.buildlogic.JvmLibraryConventionPlugin"
         }
 
+        register("hiltConvention") {
+            id = "composeimagebenchmark.hilt"
+            implementationClass = "ru.createsmart.composeimagebenchmark.buildlogic.HiltConventionPlugin"
+        }
     }
 }
