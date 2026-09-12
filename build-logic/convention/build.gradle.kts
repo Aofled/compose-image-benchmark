@@ -22,5 +22,11 @@ gradlePlugin {
             implementationClass =
                 "ru.createsmart.composeimagebenchmark.buildlogic.AndroidApplicationConventionPlugin"
         }
+        
+        register("androidApplicationCompose") {
+            id = "composeimagebenchmark.android.application.compose"
+            implementationClass =
+                "ru.createsmart.composeimagebenchmark.buildlogic.AndroidApplicationComposeConventionPlugin"
+        }
     }
 }
