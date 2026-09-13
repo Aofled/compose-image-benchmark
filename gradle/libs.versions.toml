@@ -13,7 +13,6 @@ coreKtx = "1.19.0"
 composeBom = "2026.09.00"
 androidxActivity = "1.13.0"
 androidxLifecycle = "2.11.0"
-benchmark = "1.4.1"
 
 # Architecture (DI)
 hilt = "2.60.1"
@@ -27,6 +26,8 @@ composeRules = "0.4.23"
 junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
+benchmark = "1.5.0"
+uiautomator = "2.4.0"
 
 [libraries]
 # Build logic dependencies
@@ -64,12 +65,15 @@ detekt-compose-rules = { group = "io.nlopez.compose.rules", name = "detekt", ver
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-benchmark-macro-junit4 = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "benchmark" }
+androidx-uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+android-test = { id = "com.android.test", version.ref = "agp" }
 
 # Architecture & Tools
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
@@ -88,4 +92,11 @@ compose = [
 ]
 compose-debug = [
     "androidx-compose-ui-tooling",
+]
+
+benchmark = [
+    "junit",
+    "androidx-junit",
+    "androidx-uiautomator",
+    "androidx-benchmark-macro-junit4",
 ]

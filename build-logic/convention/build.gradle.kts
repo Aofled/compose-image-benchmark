@@ -74,5 +74,10 @@ gradlePlugin {
             id = "composeimagebenchmark.detekt"
             implementationClass = "ru.createsmart.composeimagebenchmark.buildlogic.DetektConventionPlugin"
         }
+
+        register("androidBenchmark") {
+            id = "composeimagebenchmark.android.benchmark"
+            implementationClass = "ru.createsmart.composeimagebenchmark.buildlogic.AndroidBenchmarkConventionPlugin"
+        }
     }
 }
