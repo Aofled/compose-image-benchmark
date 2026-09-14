@@ -14,8 +14,11 @@ package ru.createsmart.composeimagebenchmark.core.model
  * @property likesCount Likes count.
  * @property commentsCount Comments count.
  * @property isBookmarked Dynamic icon state.
- * @property aspectRatio Image aspect ratio.
- * @property loadingDelayMs Simulated delay for image decoding.
+ * @property aspectRatio Image aspect ratio (affects Measure/Layout phase).
+ *      AspectRatio in benchmark_feed.json is calculated from the aspect ratio of the image
+ * @property loadingDelayMs Network or decoding delay simulation (ms).
+ *      loadingDelayMs in benchmark_feed.json: loading_delay_ms = 30+(sizeInKb×2.0),
+ *      where 30 is the base average network ping (~25-35 ms)
  * @property isError Force error state for UI tests.
  */
 public data class BenchmarkItem(
