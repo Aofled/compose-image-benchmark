@@ -24,8 +24,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import ru.createsmart.composeimagebenchmark.core.designsystem.R
 
 private const val MAX_VISIBLE_TAGS = 3
 
@@ -94,7 +96,11 @@ public fun BenchmarkCardLayout(
                 )
 
                 Text(
-                    text = if (isBookmarked) "★" else "☆",
+                    text = if (isBookmarked) {
+                        stringResource(R.string.core_designsystem_bookmark_active)
+                    } else {
+                        stringResource(R.string.core_designsystem_bookmark_inactive)
+                    },
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.primary,
                 )
@@ -154,7 +160,7 @@ public fun BenchmarkCardLayout(
                                     .padding(horizontal = 6.dp, vertical = 2.dp),
                             ) {
                                 Text(
-                                    text = "#$tag",
+                                    text = stringResource(R.string.core_designsystem_tag_format, tag),
                                     style = MaterialTheme.typography.labelSmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
@@ -173,13 +179,13 @@ public fun BenchmarkCardLayout(
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(
-                            text = "❤️ $likesCount",
+                            text = stringResource(R.string.core_designsystem_likes_format, likesCount),
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                         Spacer(modifier = Modifier.width(16.dp))
                         Text(
-                            text = "💬 $commentsCount",
+                            text = stringResource(R.string.core_designsystem_comments_format, commentsCount),
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )

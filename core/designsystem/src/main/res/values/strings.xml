@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="core_designsystem_error_title">Failed to load image</string>
+    <string name="core_designsystem_error_subtitle">Something went wrong. Please try again.</string>
+    <string name="core_designsystem_error_retry">Retry</string>
+    <string name="core_designsystem_tag_format">#%1$s</string>
+    <string name="core_designsystem_likes_format">❤️ %1$d</string>
+    <string name="core_designsystem_comments_format">💬 %1$d</string>
+    <string name="core_designsystem_rating_format">%1$.1f</string>
+    <string name="core_designsystem_bookmark_active">★</string>
+    <string name="core_designsystem_bookmark_inactive">☆</string>
+</resources>
