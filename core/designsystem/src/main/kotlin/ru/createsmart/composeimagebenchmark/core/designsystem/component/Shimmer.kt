@@ -26,8 +26,11 @@ import ru.createsmart.composeimagebenchmark.core.designsystem.theme.ShimmerLight
  */
 @Composable
 public fun Modifier.shimmerEffect(
+    enabled: Boolean = true,
     isDark: Boolean = isSystemInDarkTheme(),
 ): Modifier {
+    if (!enabled) return this
+
     val baseColor = if (isDark) ShimmerDarkBase else ShimmerLightBase
     val highlightColor = if (isDark) ShimmerDarkHighlight else ShimmerLightHighlight
 
@@ -49,11 +52,7 @@ public fun Modifier.shimmerEffect(
         val currentOffset = totalDistance * translateAnim
 
         val brush = Brush.linearGradient(
-            colors = listOf(
-                baseColor,
-                highlightColor,
-                baseColor,
-            ),
+            colors = listOf(baseColor, highlightColor, baseColor),
             start = Offset(x = currentOffset - width, y = currentOffset - height),
             end = Offset(x = currentOffset, y = currentOffset),
         )
