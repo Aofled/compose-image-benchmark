@@ -6,6 +6,7 @@ import coil3.ImageLoader
 import ru.createsmart.composeimagebenchmark.core.model.ImageLoaderType
 import ru.createsmart.composeimagebenchmark.feature.feed.component.strategy.AsyncImageDirectSlot
 import ru.createsmart.composeimagebenchmark.feature.feed.component.strategy.AsyncImageOverlaySlot
+import ru.createsmart.composeimagebenchmark.feature.feed.component.strategy.SubcomposeContentSlot
 import ru.createsmart.composeimagebenchmark.feature.feed.component.strategy.SubcomposeSlot
 import ru.createsmart.composeimagebenchmark.feature.feed.model.BenchmarkItemUio
 
@@ -37,6 +38,13 @@ internal fun FeedImageHost(
         }
         ImageLoaderType.SUBCOMPOSE -> {
             SubcomposeSlot(
+                item = item,
+                imageLoader = imageLoader,
+                modifier = modifier,
+            )
+        }
+        ImageLoaderType.SUBCOMPOSE_CONTENT_SLOT -> {
+            SubcomposeContentSlot(
                 item = item,
                 imageLoader = imageLoader,
                 modifier = modifier,
