@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="feature_feed_unknown_error">Unknown error occurred</string>
+    <string name="feature_feed_title">Image Benchmark</string>
+    <string name="feature_feed_switch_strategy">Switch image loader strategy</string>
 </resources>
