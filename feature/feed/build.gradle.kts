@@ -11,4 +11,5 @@ dependencies {
     implementation(libs.bundles.coil)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.bundles.coroutines)
+    implementation(libs.androidx.tracing)
 }

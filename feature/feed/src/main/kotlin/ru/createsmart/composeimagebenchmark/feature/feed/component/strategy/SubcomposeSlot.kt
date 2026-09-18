@@ -7,12 +7,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.tracing.trace
 import coil3.ImageLoader
 import coil3.compose.SubcomposeAsyncImage
+import coil3.compose.SubcomposeAsyncImageContent
 import ru.createsmart.composeimagebenchmark.core.designsystem.component.ErrorPlaceholder
 import ru.createsmart.composeimagebenchmark.core.designsystem.component.shimmerEffect
 import ru.createsmart.composeimagebenchmark.feature.feed.model.BenchmarkItemUio
 import ru.createsmart.composeimagebenchmark.feature.feed.util.toMainImageRequest
+
+private const val TRACE_SECTION_STRATEGY_RENDER = "image_strategy_render"
 
 /**
  * Strategy 3: SubcomposeAsyncImage with slot architecture.
@@ -34,19 +38,30 @@ internal fun SubcomposeSlot(
         model = imageRequest,
         imageLoader = imageLoader,
         contentDescription = item.title,
-        contentScale = ContentScale.Crop,
         modifier = modifier.fillMaxSize(),
         loading = {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .shimmerEffect(),
-            )
+            trace(TRACE_SECTION_STRATEGY_RENDER) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .shimmerEffect(),
+                )
+            }
+        },
+        success = {
+            trace(TRACE_SECTION_STRATEGY_RENDER) {
+                SubcomposeAsyncImageContent(
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.fillMaxSize(),
+                )
+            }
         },
         error = {
-            ErrorPlaceholder(
-                modifier = Modifier.fillMaxSize(),
-            )
+            trace(TRACE_SECTION_STRATEGY_RENDER) {
+                ErrorPlaceholder(
+                    modifier = Modifier.fillMaxSize(),
+                )
+            }
         },
     )
 }

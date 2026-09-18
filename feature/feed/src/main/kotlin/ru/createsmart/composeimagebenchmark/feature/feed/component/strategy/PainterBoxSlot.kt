@@ -10,6 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.tracing.trace
 import coil3.ImageLoader
 import coil3.compose.AsyncImagePainter
 import coil3.compose.rememberAsyncImagePainter
@@ -17,6 +18,8 @@ import ru.createsmart.composeimagebenchmark.core.designsystem.component.ErrorPla
 import ru.createsmart.composeimagebenchmark.core.designsystem.component.shimmerEffect
 import ru.createsmart.composeimagebenchmark.feature.feed.model.BenchmarkItemUio
 import ru.createsmart.composeimagebenchmark.feature.feed.util.toMainImageRequest
+
+private const val TRACE_SECTION_STRATEGY_RENDER = "image_strategy_render"
 
 /**
  * Strategy 5: rememberAsyncImagePainter with manual Box state.
@@ -45,26 +48,32 @@ internal fun PainterBoxSlot(
             is AsyncImagePainter.State.Loading,
             is AsyncImagePainter.State.Empty,
             -> {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .shimmerEffect(),
-                )
+                trace(TRACE_SECTION_STRATEGY_RENDER) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .shimmerEffect(),
+                    )
+                }
             }
 
             is AsyncImagePainter.State.Error -> {
-                ErrorPlaceholder(
-                    modifier = Modifier.fillMaxSize(),
-                )
+                trace(TRACE_SECTION_STRATEGY_RENDER) {
+                    ErrorPlaceholder(
+                        modifier = Modifier.fillMaxSize(),
+                    )
+                }
             }
 
             is AsyncImagePainter.State.Success -> {
-                Image(
-                    painter = painter,
-                    contentDescription = item.title,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxSize(),
-                )
+                trace(TRACE_SECTION_STRATEGY_RENDER) {
+                    Image(
+                        painter = painter,
+                        contentDescription = item.title,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.fillMaxSize(),
+                    )
+                }
             }
         }
     }

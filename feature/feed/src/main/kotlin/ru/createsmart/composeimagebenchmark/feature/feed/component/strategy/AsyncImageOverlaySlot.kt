@@ -10,12 +10,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.tracing.trace
 import coil3.ImageLoader
 import coil3.compose.AsyncImage
 import ru.createsmart.composeimagebenchmark.core.designsystem.component.ErrorPlaceholder
 import ru.createsmart.composeimagebenchmark.core.designsystem.component.shimmerEffect
 import ru.createsmart.composeimagebenchmark.feature.feed.model.BenchmarkItemUio
 import ru.createsmart.composeimagebenchmark.feature.feed.util.toMainImageRequest
+
+private const val TRACE_SECTION_STRATEGY_RENDER = "image_strategy_render"
 
 /**
  * Strategy 2: AsyncImage + Composable Overlay (Hybrid approach).
@@ -37,31 +40,33 @@ internal fun AsyncImageOverlaySlot(
     var isLoading by remember(item.id) { mutableStateOf(true) }
     var isError by remember(item.id) { mutableStateOf(false) }
 
-    Box(modifier = modifier.fillMaxSize()) {
-        AsyncImage(
-            model = imageRequest,
-            imageLoader = imageLoader,
-            contentDescription = item.title,
-            contentScale = ContentScale.Crop,
-            onLoading = {
-                isLoading = true
-                isError = false
-            },
-            onSuccess = {
-                isLoading = false
-                isError = false
-            },
-            onError = {
-                isLoading = false
-                isError = true
-            },
-            modifier = Modifier
-                .fillMaxSize()
-                .shimmerEffect(enabled = isLoading),
-        )
+    trace(TRACE_SECTION_STRATEGY_RENDER) {
+        Box(modifier = modifier.fillMaxSize()) {
+            AsyncImage(
+                model = imageRequest,
+                imageLoader = imageLoader,
+                contentDescription = item.title,
+                contentScale = ContentScale.Crop,
+                onLoading = {
+                    isLoading = true
+                    isError = false
+                },
+                onSuccess = {
+                    isLoading = false
+                    isError = false
+                },
+                onError = {
+                    isLoading = false
+                    isError = true
+                },
+                modifier = Modifier
+                    .fillMaxSize()
+                    .shimmerEffect(enabled = isLoading),
+            )
 
-        if (isError) {
-            ErrorPlaceholder(modifier = Modifier.fillMaxSize())
+            if (isError) {
+                ErrorPlaceholder(modifier = Modifier.fillMaxSize())
+            }
         }
     }
 }

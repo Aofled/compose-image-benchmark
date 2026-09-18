@@ -11,11 +11,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.tracing.trace
 import coil3.ImageLoader
 import coil3.compose.AsyncImage
 import ru.createsmart.composeimagebenchmark.core.designsystem.component.shimmerEffect
 import ru.createsmart.composeimagebenchmark.feature.feed.model.BenchmarkItemUio
 import ru.createsmart.composeimagebenchmark.feature.feed.util.toMainImageRequest
+
+private const val TRACE_SECTION_STRATEGY_RENDER = "image_strategy_render"
 
 /**
  * Strategy 1: AsyncImage (Direct Canvas / No SubcomposeLayout).
@@ -34,17 +37,19 @@ internal fun AsyncImageDirectSlot(
     val errorColor = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.5f)
     var showShimmer by remember(item.id) { mutableStateOf(true) }
 
-    AsyncImage(
-        model = imageRequest,
-        imageLoader = imageLoader,
-        contentDescription = item.title,
-        contentScale = ContentScale.Crop,
-        error = remember(errorColor) { ColorPainter(errorColor) },
-        onLoading = { showShimmer = true },
-        onSuccess = { showShimmer = false },
-        onError = { showShimmer = false },
-        modifier = modifier
-            .fillMaxSize()
-            .shimmerEffect(enabled = showShimmer),
-    )
+    trace(TRACE_SECTION_STRATEGY_RENDER) {
+        AsyncImage(
+            model = imageRequest,
+            imageLoader = imageLoader,
+            contentDescription = item.title,
+            contentScale = ContentScale.Crop,
+            error = remember(errorColor) { ColorPainter(errorColor) },
+            onLoading = { showShimmer = true },
+            onSuccess = { showShimmer = false },
+            onError = { showShimmer = false },
+            modifier = modifier
+                .fillMaxSize()
+                .shimmerEffect(enabled = showShimmer),
+        )
+    }
 }

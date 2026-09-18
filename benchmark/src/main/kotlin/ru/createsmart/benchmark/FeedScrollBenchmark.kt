@@ -4,6 +4,7 @@ import androidx.benchmark.macro.CompilationMode
 import androidx.benchmark.macro.ExperimentalMetricApi
 import androidx.benchmark.macro.FrameTimingMetric
 import androidx.benchmark.macro.StartupMode
+import androidx.benchmark.macro.TraceSectionMetric
 import androidx.benchmark.macro.junit4.MacrobenchmarkRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -78,11 +79,19 @@ public class FeedScrollBenchmark {
     @Test
     public fun scrollPainterBox(): Unit = benchmarkStressScroll(ImageLoaderType.PAINTER_BOX)
 
+    /**
+     * Measures scroll performance using two metrics:
+     * - FrameTimingMetric: Measures frame durations (like frameCpuTimeMs and frameDurationCpuMs)
+     *   to detect stuttering and overall UI smoothness.
+     * - TraceSectionMetric: Measures the accumulated time spent within the custom "image_strategy_render"
+     *   trace section to evaluate the performance overhead of the specific image loading and rendering strategy.
+     */
     private fun benchmarkStressScroll(loaderType: ImageLoaderType) {
         benchmarkRule.measureRepeated(
             packageName = TARGET_PACKAGE,
             metrics = listOf(
                 FrameTimingMetric(),
+                TraceSectionMetric(sectionName = "image_strategy_render", mode = TraceSectionMetric.Mode.Sum),
             ),
             iterations = BENCHMARK_ITERATIONS,
             compilationMode = CompilationMode.Full(),
