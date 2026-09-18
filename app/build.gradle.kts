@@ -34,5 +34,12 @@ android {
 }
 
 dependencies {
+    // Feature + DI graph. :core:data is required here — it carries the Hilt modules
+    // (DataModule, DispatchersModule) that satisfy bindings requested by :feature:feed.
+    implementation(projects.core.model)
+    implementation(projects.core.data)
+    implementation(projects.core.designsystem)
+    implementation(projects.feature.feed)
+
     implementation(libs.androidx.core.ktx)
 }
