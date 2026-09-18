@@ -26,6 +26,7 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "ComposeImageBenchmark"
+include(":benchmark")
 include(":app")
 include(":core:data")
 include(":core:designsystem")
