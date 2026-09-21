@@ -1,0 +1,16 @@
+NOTE: Your device is running a version of ART where method tracing is known to
+affect performance measurement after trace capture, so method tracing is
+off by default.
+
+To use method tracing, either flash this device, use a different device, or
+enable method tracing with MicrobenchmarkConfig / instrumentation argument, and
+only run one test at a time.
+
+For more information, see https://issuetracker.google.com/issues/316174880
+
+FeedScrollBenchmark_scrollSubcomposeAsyncImage
+  frameCount                   [min 3,242.0](file://FeedScrollBenchmark_scrollSubcomposeAsyncImage_iter005_2026-09-18-12-19-32.perfetto-trace),   [median 3,302.5](file://FeedScrollBenchmark_scrollSubcomposeAsyncImage_iter005_2026-09-18-12-19-32.perfetto-trace),   [max 3,421.0](file://FeedScrollBenchmark_scrollSubcomposeAsyncImage_iter008_2026-09-18-12-25-02.perfetto-trace)
+  image_strategy_renderCount   [min   560.0](file://FeedScrollBenchmark_scrollSubcomposeAsyncImage_iter006_2026-09-18-12-21-19.perfetto-trace),   [median   586.5](file://FeedScrollBenchmark_scrollSubcomposeAsyncImage_iter005_2026-09-18-12-19-32.perfetto-trace),   [max   627.0](file://FeedScrollBenchmark_scrollSubcomposeAsyncImage_iter004_2026-09-18-12-17-45.perfetto-trace)
+  image_strategy_renderSumMs   [min    85.2](file://FeedScrollBenchmark_scrollSubcomposeAsyncImage_iter007_2026-09-18-12-23-11.perfetto-trace),   [median   110.2](file://FeedScrollBenchmark_scrollSubcomposeAsyncImage_iter005_2026-09-18-12-19-32.perfetto-trace),   [max   117.0](file://FeedScrollBenchmark_scrollSubcomposeAsyncImage_iter002_2026-09-18-12-14-11.perfetto-trace)
+  frameDurationCpuMs           P50     12.2,   P90     22.8,   P95     28.0,   P99     30.7
+    Traces: Iteration [0](file://FeedScrollBenchmark_scrollSubcomposeAsyncImage_iter000_2026-09-18-12-10-32.perfetto-trace) [1](file://FeedScrollBenchmark_scrollSubcomposeAsyncImage_iter001_2026-09-18-12-12-22.perfetto-trace) [2](file://FeedScrollBenchmark_scrollSubcomposeAsyncImage_iter002_2026-09-18-12-14-11.perfetto-trace) [3](file://FeedScrollBenchmark_scrollSubcomposeAsyncImage_iter003_2026-09-18-12-15-59.perfetto-trace) [4](file://FeedScrollBenchmark_scrollSubcomposeAsyncImage_iter004_2026-09-18-12-17-45.perfetto-trace) [5](file://FeedScrollBenchmark_scrollSubcomposeAsyncImage_iter005_2026-09-18-12-19-32.perfetto-trace) [6](file://FeedScrollBenchmark_scrollSubcomposeAsyncImage_iter006_2026-09-18-12-21-19.perfetto-trace) [7](file://FeedScrollBenchmark_scrollSubcomposeAsyncImage_iter007_2026-09-18-12-23-11.perfetto-trace) [8](file://FeedScrollBenchmark_scrollSubcomposeAsyncImage_iter008_2026-09-18-12-25-02.perfetto-trace) [9](file://FeedScrollBenchmark_scrollSubcomposeAsyncImage_iter009_2026-09-18-12-26-50.perfetto-trace)
