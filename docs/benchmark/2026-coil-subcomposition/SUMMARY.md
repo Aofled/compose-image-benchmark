@@ -52,10 +52,6 @@ These numbers are the median of medians, across 5 runs × 10 iterations per stra
 Full distributions and per-iteration traces are in the paper and the raw data archive,
 not shown here.
 
-<div align="center">
-  <img alt="frame_duration_by_percentile" src="https://github.com/user-attachments/assets/715d2a83-0871-4771-975d-3deadddd764c" width="100%" />
-</div>
-
 *The strategy that ranks worst on P90/P95 flips between devices: on the older SM-T595
 (left), the two `SubcomposeAsyncImage` strategies fall behind; on the flagship SM-G9750
 (right), `Painter + Box` becomes the worst performer instead. See Key Finding 1.*
@@ -70,6 +66,10 @@ not shown here.
 | 4. SubcomposeAsyncImage (Content Slot) | 12.30 | 22.02 | 27.70 | 30.42 |
 | 5. Painter + Box | 12.76 | 19.62 | 25.02 | 30.26 |
 
+<div align="left">
+  <img alt="frame_duration_by_percentile" src="https://github.com/user-attachments/assets/9bd488b6-e5dd-4206-b8d0-898af88134d5" width="60%" />
+</div>
+
 **SM-G9750 (Android 12, API 31) — `frameDurationCpuMs` (ms)**
 
 | Strategy | P50 | P90 | P95 | P99 |
@@ -79,6 +79,10 @@ not shown here.
 | 3. SubcomposeAsyncImage (Slots) | 7.36 | 10.72 | 12.16 | 15.56 |
 | 4. SubcomposeAsyncImage (Content Slot) | 7.30 | 10.66 | 12.16 | 15.56 |
 | 5. Painter + Box | 7.56 | 11.04 | 12.54 | 16.00 |
+
+<div align="left">
+  <img alt="frame_duration_by_percentile" src="https://github.com/user-attachments/assets/8c22e635-82d6-455c-9366-030f4936a8ea" width="60%" />
+</div>
 
 **SM-G9750 (Android 12, API 31) — `frameOverrunMs` (ms), the direct Jank metric**
 
@@ -90,9 +94,55 @@ not shown here.
 | 4. SubcomposeAsyncImage (Content Slot) | -7.74 | -4.36 | -2.82 | 0.64 |
 | 5. Painter + Box | -7.08 | -3.74 | -2.28 | 1.32 |
 
+<div align="left">
+  <img alt="frame_duration_by_percentile" src="https://github.com/user-attachments/assets/e969cbac-c058-49bc-ad44-85c6f680719f" width="60%" />
+</div>
+
 A negative value means the frame finished before its deadline — no visible jank. A
 positive value means the frame missed its deadline — visible jank. `frameOverrunMs`
 needs API 31+, so it is only available for the G9750 run.
+
+### ⚠️ Appendix: what the naive manual trace() measurement showed (and why it's misleading)
+
+The numbers below are the manual `TraceSectionMetric("image_strategy_render")`
+results referenced in Key Finding 3 — included here specifically to show how badly a
+naive manual trace can mislead, not as a trustworthy ranking. Do not use this table to
+rank strategies; use the `frameDurationCpuMs`/`frameOverrunMs` tables above instead.
+
+**SM-T595 — summed `image_strategy_render` time (ms), median across 5 runs × 10 iterations**
+
+| Strategy | Sum (ms) | vs Direct Canvas |
+|---|---|---|
+| 1. AsyncImage (Direct Canvas) | 151.4 | — (baseline) |
+| 2. AsyncImage + Overlay | 200.5 | +32.4% |
+| 3. SubcomposeAsyncImage (Slots) | 106.0 | -30.0% |
+| 4. SubcomposeAsyncImage (Content Slot) | 99.4 | -34.3% |
+| 5. Painter + Box | 139.0 | -8.2% |
+
+**SM-G9750 — summed `image_strategy_render` time (ms), median across 5 runs × 10 iterations**
+
+| Strategy | Sum (ms) | vs Direct Canvas |
+|---|---|---|
+| 1. AsyncImage (Direct Canvas) | 69.5 | — (baseline) |
+| 2. AsyncImage + Overlay | 88.9 | +27.9% |
+| 3. SubcomposeAsyncImage (Slots) | 44.5 | -36.0% |
+| 4. SubcomposeAsyncImage (Content Slot) | 48.6 | -30.1% |
+| 5. Painter + Box | 60.9 | -12.4% |
+
+<div align="center">
+  <img alt="frame_duration_by_percentile" src="https://github.com/user-attachments/assets/d94618eb-27e2-4094-9ff6-1ca69d26dbaf" width="75%" />
+</div>
+
+Read literally, this table says the opposite of Key Finding 1 and the
+`frameDurationCpuMs` results above: the two `SubcomposeLayout`-based strategies look
+30-36% *faster* than Direct Canvas, not slower. They aren't — the manual trace section
+only wraps the code inside each strategy's own slot/branch, so it never sees the
+subcomposition work itself, which runs inside the Compose framework during the Measure
+phase. Strategy 2 (`Overlay`) shows the opposite skew for the same reason: its trace
+section wraps the *entire* render path (same scope as Direct Canvas), so its number is
+directly comparable and correctly shows a real, if small, overhead.
+
+This table is a worked example of Key Finding 3, not data to act on.
 
 ## 💡 Key Findings
 
